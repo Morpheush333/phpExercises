@@ -26,6 +26,7 @@ echo<<<END
         <td>To pay </td> <td> $result Euro</td>
     </tr>
     </table>
+    <br><a href="index.html">Return to Pharmacy order form</a>
 
 
 END;
