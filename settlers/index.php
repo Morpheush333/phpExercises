@@ -1,5 +1,10 @@
 <?php
     session_start();
+
+    if((isset($_SESSION['logInTrue'])) && ($_SESSION['logInTrue']==true)){
+        header('Location: game.php');
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>

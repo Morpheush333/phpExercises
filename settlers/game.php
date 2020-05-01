@@ -1,5 +1,10 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION['logInTrue'])){
+        header('Location: index.php');
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +19,7 @@
 
 <?php
 
-    echo"<p>Hello ".$_SESSION['user']."!</p>";
+    echo"<p>Hello ".$_SESSION['user'].'! [ <a href="logout.php">Logout</a> ] </p>';
     echo"<p><b>Wood</b>: ".$_SESSION['wood'];
     echo" | <b>Stone</b>: ".$_SESSION['stone'];
     echo" | <b>Gold</b>: ".$_SESSION['gold']."</p>";

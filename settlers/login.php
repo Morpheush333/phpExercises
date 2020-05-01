@@ -2,6 +2,11 @@
 
     session_start();
 
+    if(!isset($_POST['login']) || (!isset($_POST['password']))){
+        header('Location: index.php');
+        exit();
+    }
+
     require_once "connect.php";
 
     $connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -20,9 +25,14 @@
 
             $db_users = $result->num_rows;
             if($db_users > 0){
+
+                $_SESSION['logInTrue'] = true;
+
                 $line = $result->fetch_assoc();
+                $_SESSION['id'] = $line['id'];
                 $_SESSION['user'] = $line['user'];
                 $_SESSION['wood'] = $line['wood'];
+
                 $_SESSION['stone'] = $line['stone'];
                 $_SESSION['gold'] = $line['gold'];
                 $_SESSION['email'] = $line['email'];
