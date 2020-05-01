@@ -19,11 +19,16 @@
         $login = $_POST['login'];
         $password = $_POST['password'];
 
-        $sql = "SELECT * FROM users WHERE BINARY user='$login' AND BINARY pass='$password'";
+        $login = htmlentities($login, ENT_QUOTES, "UTF-8");
+        $password = htmlentities($password, ENT_QUOTES, "UTF-8");
 
-        if($result = @$connect->query($sql)){
+        if($result = @$connect->query(
+            sprintf("SELECT * FROM users WHERE BINARY user='%s' AND BINARY pass='%s'",
+            mysqli_real_escape_string($connect, $login),
+            mysqli_real_escape_string($connect, $password)))){
 
             $db_users = $result->num_rows;
+
             if($db_users > 0){
 
                 $_SESSION['logInTrue'] = true;
