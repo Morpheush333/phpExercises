@@ -28,12 +28,14 @@
                 $_SESSION['email'] = $line['email'];
                 $_SESSION['premium'] = $line['premium'];
 
+                unset($_SESSION['wrongLog']);
                 $result->free_result();
                 header('Location: game.php');
             }
             else {
 
-            
+            $_SESSION['wrongLog'] = '<span style="color:red"> Wrong login or password!</span>';
+            header('Location: index.php');
 
             }
 
