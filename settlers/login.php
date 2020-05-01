@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     require_once "connect.php";
 
     $connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -19,11 +21,10 @@
             $db_users = $result->num_rows;
             if($db_users > 0){
                 $line = $result->fetch_assoc();
-                $user = $line['user'];
+                $_SESSION['user'] = $line['user'];
 
                 $result->free_result();
-
-                echo $user;
+                header('Location: game.php');
             }
             else {
 
