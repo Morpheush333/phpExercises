@@ -14,7 +14,13 @@
 
 <?php
 
-    echo"<p>Hello ".$_SESSION['user']."!";
+    echo"<p>Hello ".$_SESSION['user']."!</p>";
+    echo"<p><b>Wood</b>: ".$_SESSION['wood'];
+    echo" | <b>Stone</b>: ".$_SESSION['stone'];
+    echo" | <b>Gold</b>: ".$_SESSION['gold']."</p>";
+
+    echo"<p><b>Email</b>: ".$_SESSION['email'];
+    echo"</br><b>Premium</b>: ".$_SESSION['premium']."</p>";
 
 
 ?>

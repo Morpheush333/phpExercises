@@ -14,7 +14,7 @@
         $login = $_POST['login'];
         $password = $_POST['password'];
 
-        $sql = "SELECT * FROM users WHERE user='$login' AND pass='$password'";
+        $sql = "SELECT * FROM users WHERE BINARY user='$login' AND BINARY pass='$password'";
 
         if($result = @$connect->query($sql)){
 
@@ -22,11 +22,18 @@
             if($db_users > 0){
                 $line = $result->fetch_assoc();
                 $_SESSION['user'] = $line['user'];
+                $_SESSION['wood'] = $line['wood'];
+                $_SESSION['stone'] = $line['stone'];
+                $_SESSION['gold'] = $line['gold'];
+                $_SESSION['email'] = $line['email'];
+                $_SESSION['premium'] = $line['premium'];
 
                 $result->free_result();
                 header('Location: game.php');
             }
             else {
+
+            
 
             }
 
