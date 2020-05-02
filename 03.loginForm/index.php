@@ -20,6 +20,7 @@
     The Settlers <br/> <br/>
 
     <a href="registration.php">Create a new free account! </a>
+    <br><br>
 
     <form action="login.php" method="POST">
 
