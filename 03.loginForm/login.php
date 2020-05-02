@@ -20,32 +20,37 @@
         $password = $_POST['password'];
 
         $login = htmlentities($login, ENT_QUOTES, "UTF-8");
-        $password = htmlentities($password, ENT_QUOTES, "UTF-8");
 
         if($result = @$connect->query(
-            sprintf("SELECT * FROM users WHERE BINARY user='%s' AND BINARY pass='%s'",
-            mysqli_real_escape_string($connect, $login),
-            mysqli_real_escape_string($connect, $password)))){
+            sprintf("SELECT * FROM users WHERE BINARY user='%s'",
+            mysqli_real_escape_string($connect, $login)))){
 
             $db_users = $result->num_rows;
 
             if($db_users > 0){
 
-                $_SESSION['logInTrue'] = true;
+                    $line = $result->fetch_assoc();
 
-                $line = $result->fetch_assoc();
-                $_SESSION['id'] = $line['id'];
-                $_SESSION['user'] = $line['user'];
-                $_SESSION['wood'] = $line['wood'];
+                    if(password_verify($password, $line['pass'])){
 
-                $_SESSION['stone'] = $line['stone'];
-                $_SESSION['gold'] = $line['gold'];
-                $_SESSION['email'] = $line['email'];
-                $_SESSION['premium'] = $line['premium'];
+                    $_SESSION['logInTrue'] = true;
+                    $_SESSION['id'] = $line['id'];
+                    $_SESSION['user'] = $line['user'];
+                    $_SESSION['wood'] = $line['wood'];
+                    $_SESSION['stone'] = $line['stone'];
+                    $_SESSION['gold'] = $line['gold'];
+                    $_SESSION['email'] = $line['email'];
+                    $_SESSION['premium'] = $line['premium'];
 
-                unset($_SESSION['wrongLog']);
-                $result->free_result();
-                header('Location: game.php');
+                    unset($_SESSION['wrongLog']);
+                    $result->free_result();
+                    header('Location: game.php');
+                }
+
+                else{
+                    $_SESSION['wrongLog'] = '<span style="color:red"> Wrong login or password!</span>';
+                    header('Location: index.php');
+                }
             }
             else {
 
