@@ -1,3 +1,12 @@
+<?php
+    session_start();
+
+    if((isset($_SESSION['logInTrue'])) && ($_SESSION['logInTrue']==true)){
+        header('Location: game.php');
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +19,8 @@
 
     The Settlers <br/> <br/>
 
+    <a href="registration.php">Create a new free account! </a>
+
     <form action="login.php" method="POST">
 
         Login: <br><input type="text" name="login"><br>
@@ -18,6 +29,11 @@
 
 
     </form>
+
+<?php
+    if(isset($_SESSION['wrongLog']))    echo $_SESSION['wrongLog'];
+
+?>
     
 </body>
 </html>
