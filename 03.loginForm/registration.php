@@ -63,6 +63,33 @@
             $_SESSION['e_bot'] = "Confirm that you are not a bot";
         }
 
+        require_once "connect.php";
+        mysqli_report(MYSQLI_REPORT_STRICT);
+
+        try{
+            $connect = new mysqli($host, $db_user, $db_password, $db_name);
+            if($connect->connect_errno !=0){
+                throw new Exception(mysqli_connect_errno());
+            }
+            else{
+                $results = $connect->query("SELECT id FROM users WHERE email='$email'");
+
+                if(!$results) throw new Exception($connect->error); 
+
+                $check_email = $results->num_rows;
+                if($check_email > 0){
+                    $allGood = false;
+                    $_SESSION['e_email'] = "There is an account assigned to this email";
+                }
+                
+                $connect -> close();
+            }
+        }
+        catch (exception $e){
+            echo '<span style="color:red;">Server error, sorry for any inconvenience please log in at another time</span>';
+            echo '<br />Developer information '.$e;
+        }
+
         if($allGood == true){
             echo "Validation ok"; exit();
         }
