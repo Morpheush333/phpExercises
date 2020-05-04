@@ -95,7 +95,14 @@
                 }
 
                 if($allGood == true){
-                    echo "Validation ok"; exit();
+                    
+                    if($connect->query("INSERT INTO users VALUES (NULL, '$nick', '$password_hash', '$email', 100, 100, 50, 14)")){
+                        $_SESSION['correctRegistration'] = true;
+                        header('Location: hello.php');
+                    }
+                    else{
+                        throw new Exception($connect->error);
+                    }
                 }
                 
                 $connect -> close();
