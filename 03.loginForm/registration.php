@@ -51,7 +51,8 @@
             $_SESSION['e_regulations'] = "Confirm regulations";
         }
 
-        $secret = "6LfMYPEUAAAAANMszXsDVpJHIcol0vgo1QcUWS6H";
+        
+        $secret = "";
 
         $check = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
 
@@ -62,6 +63,12 @@
             $allGood = false;
             $_SESSION['e_bot'] = "Confirm that you are not a bot";
         }
+
+        $_SESSION['fr_nick'] = $nick;
+        $_SESSION['fr_email'] = $email;
+        $_SESSION['fr_password1'] = $password1;
+        $_SESSION['fr_password2'] = $password2;
+        if(isset($_POST['regulations'])) $_SESSION['fr_regulations'] = true;
 
         require_once "connect.php";
         mysqli_report(MYSQLI_REPORT_STRICT);
@@ -138,7 +145,12 @@
 
     <form method = "post">
 
-    Nickname: <br/><input type="text" name="nick"> </input><br/>
+    Nickname: <br/><input type="text" value="<?php
+        if(isset($_SESSION['fr_nick'])){
+            echo $_SESSION['fr_nick'];
+            unset($_SESSION['fr_nick']);
+        }
+    ?>" name="nick" /><br/>
     <?php
         if(isset($_SESSION['e_nick'])){
             echo '<div class="error">'.$_SESSION['e_nick'].'</div>';
@@ -146,7 +158,12 @@
         }
     ?>
 
-    E-mail: <br/><input type="text" name="email"> </input><br/>
+    E-mail: <br/><input type="text" value="<?php
+        if(isset($_SESSION['fr_email'])){
+            echo $_SESSION['fr_email'];
+            unset($_SESSION['fr_email']);
+        }
+    ?>" name="email"> </input><br/>
 
     <?php
         if(isset($_SESSION['e_email'])){
@@ -155,17 +172,32 @@
         }
     ?>
 
-    Password: <br/><input type="password" name="password1"> </input><br/>
+    Password: <br/><input type="password" value="<?php
+        if(isset($_SESSION['fr_password1'])){
+            echo $_SESSION['fr_password1'];
+            unset($_SESSION['fr_password1']);
+        }
+    ?>" name="password1"><br/>
     <?php
         if(isset($_SESSION['e_password'])){
             echo '<div class="error">'.$_SESSION['e_password'].'</div>';
             unset($_SESSION['e_password']);
         }
     ?>
-    Repeat-password: <br/><input type="password" name="password2"> </input><br/>
+    Repeat-password: <br/><input type="password" value="<?php
+        if(isset($_SESSION['fr_password2'])){
+            echo $_SESSION['fr_password2'];
+            unset($_SESSION['fr_password2']);
+        }
+    ?>" name="password2"><br/>
 
     <label>
-    <input type="checkbox" name="regulations">I accept the terms and conditions
+    <input type="checkbox" name="regulations" <?php
+        if(isset($_SESSION['fr_regulations'])){
+            echo $_SESSION['fr_regulations'];
+            unset($_SESSION['fr_regulations']);
+        }
+    ?>>I accept the terms and conditions
     <label>
     <?php
         if(isset($_SESSION['e_regulations'])){
