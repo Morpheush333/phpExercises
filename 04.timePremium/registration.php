@@ -51,7 +51,7 @@
             $_SESSION['e_regulations'] = "Confirm regulations";
         }
 
-        // ***6LfMYPEUAAAAANMszXs***DVpJHIcol0vgo1QcUWS6H***
+         // ***6LfMYPEUAAAAANMszXs***DVpJHIcol0vgo1QcUWS6H***
         // $secret = "";
 
         // $check = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
@@ -103,7 +103,7 @@
 
                 if($allGood == true){
                     
-                    if($connect->query("INSERT INTO users VALUES (NULL, '$nick', '$password_hash', '$email', 100, 100, 50, 14)")){
+                    if($connect->query("INSERT INTO users VALUES (NULL, '$nick', '$password_hash', '$email', 100, 100, 50, now() + INTERVAL 14 DAY)")){
                         $_SESSION['correctRegistration'] = true;
                         header('Location: hello.php');
                     }
