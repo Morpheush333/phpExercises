@@ -44,7 +44,24 @@
         }
 
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
-        echo $password_hash; exit(); 
+        
+        if(!isset($_POST['regulations'])){
+
+            $allGood = false;
+            $_SESSION['e_regulations'] = "Confirm regulations";
+        }
+
+        $secret = "6LfMYPEUAAAAANMszXsDVpJHIcol0vgo1QcUWS6H";
+
+        $check = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
+
+        $response = json_decode($check);
+
+        if($response->success==false){
+
+            $allGood = false;
+            $_SESSION['e_bot'] = "Confirm that you are not a bot";
+        }
 
         if($allGood == true){
             echo "Validation ok"; exit();
@@ -104,8 +121,20 @@
     <label>
     <input type="checkbox" name="regulations">I accept the terms and conditions
     <label>
+    <?php
+        if(isset($_SESSION['e_regulations'])){
+            echo '<div class="error">'.$_SESSION['e_regulations'].'</div>';
+            unset($_SESSION['e_regulations']);
+        }
+    ?>
 
     <div class="g-recaptcha" data-sitekey="6LfMYPEUAAAAAAv2xW_T0hgdzEavvla8e6HUrmOH"></div>
+    <?php
+        if(isset($_SESSION['e_bot'])){
+            echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
+            unset($_SESSION['e_bot']);
+        }
+    ?>
 
     <br />
     <input type="submit" value="register">
