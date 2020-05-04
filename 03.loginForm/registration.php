@@ -72,6 +72,7 @@
                 throw new Exception(mysqli_connect_errno());
             }
             else{
+                // check email
                 $results = $connect->query("SELECT id FROM users WHERE email='$email'");
 
                 if(!$results) throw new Exception($connect->error); 
@@ -81,6 +82,21 @@
                     $allGood = false;
                     $_SESSION['e_email'] = "There is an account assigned to this email";
                 }
+
+                // check nick
+                $results = $connect->query("SELECT id FROM users WHERE user='$nick'");
+
+                if(!$results) throw new Exception($connect->error); 
+
+                $check_nick = $results->num_rows;
+                if($check_nick > 0){
+                    $allGood = false;
+                    $_SESSION['e_nick'] = "There is already a player with such a nickname, choose another one";
+                }
+
+                if($allGood == true){
+                    echo "Validation ok"; exit();
+                }
                 
                 $connect -> close();
             }
@@ -88,10 +104,6 @@
         catch (exception $e){
             echo '<span style="color:red;">Server error, sorry for any inconvenience please log in at another time</span>';
             echo '<br />Developer information '.$e;
-        }
-
-        if($allGood == true){
-            echo "Validation ok"; exit();
         }
     }
 
