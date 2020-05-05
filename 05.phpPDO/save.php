@@ -2,9 +2,11 @@
 
 session_start();
 
+require_once 'database.php';
+
 ?>
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 
     <meta charset="utf-8">
