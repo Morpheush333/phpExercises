@@ -28,9 +28,17 @@ session_start();
             <article>
                 <form method="post" action="save.php">
                     <label>Enter your e-mail
-                        <input type="email" name="email">
+                        <input type="email" name="email" <?php if(isset($_SESSION['given_email']))
+                        echo 'value="' .$_SESSION['given_email'] . '"' ?>>
                     </label>
                     <input type="submit" value="Register!">
+                    <?php
+
+                    if(isset($_SESSION['given_email'])){
+                        echo '<p>Provide email is incorrect! </p>';
+                        unset($_SESSION['given_email']);
+                    }
+                    ?>
                 </form>
             </article>
         </main>
